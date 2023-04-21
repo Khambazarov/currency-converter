@@ -1,3 +1,88 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-family: 'Roboto', sans-serif;
+  border: none;
+}
+
 .App {
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #000;
+  color: #ccc;
+}
+
+.header {
+  width: 100%;
   text-align: center;
+  margin: 5rem auto;
+  font-size: 2.5rem;
+}
+
+.result {
+  width: 100%;
+  text-align: center;
+  margin: 2rem auto auto auto;
+  background-color: #000;
+  color: #fff;
+  font-size: 2.5rem;
+}
+
+.form {
+  width: 100%;
+  text-align: center;
+  padding: 0 0 3rem 0;
+}
+
+.wrapper {
+  width: 100%;
+  /* height: 100%; */
+  display: grid;
+  grid-template-columns: 70% 30%;
+}
+
+.select-crypto {
+  /* height: 100%; */
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.form-input {
+  /* height: 100%; */
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 1.25rem;
+}
+
+.form-input::placeholder {
+  font-weight: bold;
+}
+
+.form-submit-btn {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin: auto auto 0 auto;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: firebrick;
+  color: #ccc;
+  text-transform: uppercase;
+  letter-spacing: 1.5rem;
 }
