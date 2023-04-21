@@ -24,10 +24,9 @@ export const App = () => {
     const responseData = await fetch(fetchURL);
     const jsonData = await responseData.json();
     const convertResult = jsonData.rates[convertFrom] * amount;
-    const replaceDotToComma = convertResult.toString().split(".").join(",");
-    const handleNaN =
-      replaceDotToComma === 0 ? !replaceDotToComma : replaceDotToComma;
-    setResult(handleNaN);
+    const replaceDotToComma =
+      amount > 0 && convertResult.toString().split(".").join(",");
+    setResult(replaceDotToComma);
   };
 
   return (
@@ -69,7 +68,7 @@ export const App = () => {
         <button
           className='form-submit-btn'
           type='submit'
-          onClick={convertCurrency}
+          onClick={amount > 0 && convertCurrency}
         >
           Convert
         </button>
