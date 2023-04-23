@@ -24,15 +24,19 @@ export const App = () => {
     const responseData = await fetch(fetchURL);
     const jsonData = await responseData.json();
     const convertResult = jsonData.rates[convertFrom] * amount;
-    const replaceDotToComma =
-      amount > 0 && convertResult.toString().split(".").join(",");
+
+    const replaceDotToComma = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(convertResult);
+
     setResult(replaceDotToComma);
   };
 
   return (
     <div className='App'>
       <h1 className='header'>Crypto Converter</h1>
-      <h2 className='result'>{result && `$ ${result}`}</h2>
+      <h2 className='result'>{result && `${result}`}</h2>
       <form className='form' action='#'>
         <div className='wrapper'>
           <select
@@ -68,7 +72,7 @@ export const App = () => {
         <button
           className='form-submit-btn'
           type='submit'
-          onClick={amount > 0 && convertCurrency}
+          onClick={convertCurrency}
         >
           Convert
         </button>
