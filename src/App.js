@@ -25,12 +25,19 @@ export const App = () => {
   };
 
   const convertCurrency = async (e) => {
-    if (!convertFrom || !amount || amount === "0") {
+    if (
+      !convertFrom ||
+      !amount ||
+      !result ||
+      amount === "0" ||
+      result === "" ||
+      result === "0"
+    ) {
       return;
     }
     try {
       e.preventDefault();
-      const APIURL = `http://api.coinlayer.com/api/live?access_key=${API_KEY}`;
+      const APIURL = `http://api.coinlayer.com/api/live?access_key=${API_KEY}}`;
       const fetchURL = `${APIURL}&from=${convertFrom.toUpperCase()}&amount=${amount}`;
       const responseData = await fetch(fetchURL);
       if (!responseData.ok) {
@@ -40,7 +47,7 @@ export const App = () => {
       if (jsonData.error) {
         throw new Error(jsonData.error.info);
       }
-      const convertResult = jsonData.rates[convertFrom] * amount;
+      const convertResult = (await jsonData.rates[convertFrom]) * amount;
       const replaceDotToComma = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
@@ -69,7 +76,7 @@ export const App = () => {
           {result !== "0" && swapDotAndComma(result)}
         </h2>
       </div>
-      <form className='form' action='#'>
+      <form className='form'>
         <select
           required
           className='select-crypto'
