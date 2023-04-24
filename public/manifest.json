@@ -1,0 +1,10 @@
+{
+  "name": "Crypto-Converter-App",
+  "short_name": "Crypto",
+  "theme_color": "#000",
+  "background_color": "#000",
+  "display": "fullScreen",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/index.html"
+}
