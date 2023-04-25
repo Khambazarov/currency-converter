@@ -25,19 +25,9 @@ export const App = () => {
   };
 
   const convertCurrency = async (e) => {
-    if (
-      !convertFrom ||
-      !amount ||
-      !result ||
-      amount === "0" ||
-      result === "" ||
-      result === "0"
-    ) {
-      return;
-    }
     try {
       e.preventDefault();
-      const APIURL = `http://api.coinlayer.com/api/live?access_key=${API_KEY}}`;
+      const APIURL = `http://api.coinlayer.com/api/live?access_key=${API_KEY}`;
       const fetchURL = `${APIURL}&from=${convertFrom.toUpperCase()}&amount=${amount}`;
       const responseData = await fetch(fetchURL);
       if (!responseData.ok) {
@@ -54,7 +44,6 @@ export const App = () => {
       }).format(convertResult);
       setResult(replaceDotToComma);
     } catch (error) {
-      console.error(error);
       setResult(`Error: ${error.message}`);
     }
   };
@@ -64,7 +53,6 @@ export const App = () => {
       <h1 className='header'>Crypto Converter</h1>
       <div className='container'>
         <h2 className='result'>
-          {/* BTC */}
           {result !== "" && result !== "0" && amount !== "1"
             ? `${amount} ${convertFrom}'s`
             : result !== "" && result !== "0" && amount === "1"
@@ -72,11 +60,10 @@ export const App = () => {
             : null}
         </h2>
         <h2 className='result usd'>
-          {/* 111 */}
           {result !== "0" && swapDotAndComma(result)}
         </h2>
       </div>
-      <form className='form'>
+      <form className='form' action='#'>
         <select
           required
           className='select-crypto'
