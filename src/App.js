@@ -56,19 +56,20 @@ export const App = () => {
     showResult: {
       fontSize: "1.25rem",
       textAlign: "center",
-      backgroundColor: "#fff",
       padding: "1rem 2rem",
-      boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+      backgroundColor: "#fff",
+      boxShadow: "inset 0 0 10px 5px rgba(0, 0, 0, 0.5)",
     },
     inputField: {
       display: "block",
       width: "100%",
       textAlign: "center",
       padding: "1rem",
-      borderRadius: "0.25rem",
-      border: "1px solid #ccc",
+      border: "none",
       fontSize: "1.25rem",
-      color: "#555",
+      fontWeight: "bold",
+      backgroundColor: "#fff",
+      boxShadow: "inset 0 0 10px 2px rgba(0, 0, 0, 0.5)",
     },
   };
 
