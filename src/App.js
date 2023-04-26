@@ -26,7 +26,7 @@ export const App = () => {
   const convertCurrency = async (e) => {
     e.preventDefault();
     if (crypto === "" || amount === "" || amount <= 0) {
-      setResult("Please enter a valid crypto, currency and amount");
+      setResult("Please fill all fields correctly");
       return;
     }
     try {
@@ -60,6 +60,10 @@ export const App = () => {
       backgroundColor: "#fff",
       boxShadow: "inset 0 0 10px 5px rgba(0, 0, 0, 0.5)",
     },
+    result: {
+      backgroundColor: "#firebrick",
+      color: "#fff",
+    },
   };
 
   return (
@@ -71,6 +75,15 @@ export const App = () => {
         </div>
       )}
       <form className='form'>
+        {/* {!crypto && (
+          <div className='crypto'>
+            <img
+              src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${crypto}.png`}
+              alt='crypto'
+            />
+            <h2>{crypto.toUpperCase()}</h2>
+          </div>
+        )} */}
         <select
           required
           className='select'
