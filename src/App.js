@@ -25,6 +25,10 @@ export const App = () => {
   };
 
   const convertCurrency = async (e) => {
+    if (convertFrom === "" || amount === "" || amount <= 0) {
+      setResult("Please  choose a crypto and enter an amount");
+      return;
+    }
     try {
       e.preventDefault();
       const APIURL = `http://api.coinlayer.com/api/live?access_key=${API_KEY}`;
@@ -48,17 +52,21 @@ export const App = () => {
     }
   };
 
+  const pluralOrSingular = (amount) => {
+    const result =
+      convertFrom !== "" &&
+      amount !== "" &&
+      (amount !== "1"
+        ? `${amount} ${convertFrom}'s`
+        : `${amount} ${convertFrom}`);
+    return result;
+  };
+
   return (
     <div className='App'>
       <h1 className='header'>Crypto Converter</h1>
       <div className='container'>
-        <h2 className='result'>
-          {result !== "" && result !== "0" && amount !== "1"
-            ? `${amount} ${convertFrom}'s`
-            : result !== "" && result !== "0" && amount === "1"
-            ? `${amount} ${convertFrom}`
-            : null}
-        </h2>
+        <h2 className='result'>{result !== "0" && pluralOrSingular(amount)}</h2>
         <h2 className='result usd'>
           {result !== "0" && swapDotAndComma(result)}
         </h2>
