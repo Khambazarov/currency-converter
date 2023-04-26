@@ -31,7 +31,7 @@ export const App = () => {
     }
     try {
       e.preventDefault();
-      const APIURL = `http://api.coinlayer.com/api/live?access_key=${API_KEY}`;
+      const APIURL = `https://api.coinlayer.com/api/live?access_key=${API_KEY}`;
       const fetchURL = `${APIURL}&from=${convertFrom.toUpperCase()}&amount=${amount}`;
       const responseData = await fetch(fetchURL);
       if (!responseData.ok) {
