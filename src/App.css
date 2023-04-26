@@ -39,9 +39,8 @@
   justify-content: flex-end;
 }
 
-.select-crypto,
-.form-input,
-.select-currency {
+.select,
+.input {
   display: block;
   width: 100%;
   text-align: center;
@@ -50,11 +49,13 @@
   font-size: 1.25rem;
   font-weight: bold;
   color: #000;
-  background-color: #fff;
   letter-spacing: 2px;
+  background-color: #fff;
+  box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.5rem;
 }
 
-.form-submit-btn {
+.submit-btn {
   display: block;
   width: 100%;
   text-align: center;
@@ -66,13 +67,6 @@
   font-weight: bold;
   letter-spacing: 1rem;
   border: none;
-  margin-top: 1rem;
-}
-
-.error {
-  font-size: 1rem;
-  text-align: center;
-  color: red;
 }
 
 /* Tablet Styles */
@@ -97,25 +91,20 @@
     gap: 1rem;
   }
 
-  .select-crypto,
-  .form-input,
-  .select-currency,
-  .form-submit-btn {
+  .select,
+  .submit-btn {
     border-radius: 0.25rem;
     cursor: pointer;
   }
 
-  .form-input {
+  .input {
+    border-radius: 0.25rem;
     cursor: auto;
   }
 
-  .form-submit-btn {
+  .submit-btn {
     grid-column: 1 / 4;
     font-size: 1.5rem;
     letter-spacing: 1.5rem;
-  }
-
-  .error {
-    font-size: 1.5rem;
   }
 }

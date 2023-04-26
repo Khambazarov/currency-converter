@@ -26,7 +26,7 @@ export const App = () => {
   const convertCurrency = async (e) => {
     e.preventDefault();
     if (crypto === "" || amount === "" || amount <= 0) {
-      setResult("Please select a cryptocurrency and enter an amount.");
+      setResult("Please enter a valid crypto, currency and amount");
       return;
     }
     try {
@@ -34,18 +34,18 @@ export const App = () => {
         `https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=${currency}&amount=${amount}`
       );
       const result = response.data[crypto][currency] * amount;
-      const NumberFormatDE = new Intl.NumberFormat("de-DE", {
+      const formatDE = new Intl.NumberFormat("de-DE", {
         style: "currency",
         currency: "EUR",
       }).format(result);
-      const NumberFormatUS = new Intl.NumberFormat("en-US", {
+      const formatUS = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
       }).format(result);
       setResult(
         currency === "eur"
-          ? `${amount} ${crypto.toUpperCase()} = ${NumberFormatDE}`
-          : `${amount} ${crypto.toUpperCase()} = ${NumberFormatUS}`
+          ? `${amount} ${crypto.toUpperCase()} = ${formatDE}`
+          : `${amount} ${crypto.toUpperCase()} = ${formatUS}`
       );
     } catch (error) {
       setResult(`Error: ${error.message}`);
@@ -73,42 +73,36 @@ export const App = () => {
       <form className='form'>
         <select
           required
-          className='select-crypto'
-          name='select-crypto'
+          className='select'
+          name='crypto'
           onChange={handleCryptoSelect}
         >
+          <option value=''>Select Cryptocurrency</option>
           <option value='bitcoin'>Bitcoin (BTC)</option>
           <option value='ethereum'>Ethereum (ETH)</option>
           <option value='cardano'>Cardano (ADA)</option>
           <option value='ripple'>Ripple (XRP)</option>
           <option value='litecoin'>Litecoin (LTC)</option>
         </select>
+        <select
+          required
+          className='select'
+          name='currency'
+          onChange={handleCurrencySelect}
+        >
+          <option value=''>Select Currency</option>
+          <option value='eur'>EUR</option>
+          <option value='usd'>USD</option>
+        </select>
         <input
           min={0}
           required
-          className='form-input'
+          className='input'
           type='number'
           placeholder='Amount'
           onChange={handleAmountInput}
         />
-        <select
-          required
-          className='select-currency'
-          name='select-currency'
-          onChange={handleCurrencySelect}
-        >
-          <option className='select' value='eur'>
-            EUR
-          </option>
-          <option className='select' value='usd'>
-            USD
-          </option>
-        </select>
-        <button
-          className='form-submit-btn'
-          type='submit'
-          onClick={convertCurrency}
-        >
+        <button className='submit-btn' type='submit' onClick={convertCurrency}>
           Convert
         </button>
       </form>
