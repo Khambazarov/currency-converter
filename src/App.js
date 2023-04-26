@@ -1,89 +1,99 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./App.css";
 
 export const App = () => {
-  const API_KEY = process.env.REACT_APP_ACCESS_KEY;
-  const [convertFrom, setConvertFrom] = useState("");
+  const [crypto, setCrypto] = useState("");
   const [amount, setAmount] = useState("");
   const [result, setResult] = useState("");
+  const [currency, setCurrency] = useState("eur");
 
-  const handleCurrencyFrom = (e) => {
-    const from = e.target.value;
-    setConvertFrom(from.toUpperCase());
+  const handleCryptoSelect = (e) => {
+    const crypto = e.target.value;
+    setCrypto(crypto);
   };
 
-  const handleCurrencyAmount = (e) => {
+  const handleAmountInput = (e) => {
     const amount = e.target.value;
     setAmount(amount);
   };
 
-  const swapDotAndComma = (number) => {
-    const replaceDotWithSpace = number.replace(".", " ");
-    const replaceCommaWithDot = replaceDotWithSpace.replace(/,/g, ".");
-    const replaceSpaceWithComma = replaceCommaWithDot.replace(" ", ",");
-    return replaceSpaceWithComma;
+  const handleCurrencySelect = (e) => {
+    const currency = e.target.value;
+    setCurrency(currency);
   };
 
   const convertCurrency = async (e) => {
-    if (convertFrom === "" || amount === "" || amount <= 0) {
-      setResult("Please  choose a crypto and enter an amount");
+    e.preventDefault();
+    if (crypto === "" || amount === "" || amount <= 0) {
+      setResult("Please select a cryptocurrency and enter an amount.");
       return;
     }
     try {
-      e.preventDefault();
-      const APIURL = `https://api.coinlayer.com/api/live?access_key=${API_KEY}`;
-      const fetchURL = `${APIURL}&from=${convertFrom.toUpperCase()}&amount=${amount}`;
-      const responseData = await fetch(fetchURL);
-      if (!responseData.ok) {
-        throw new Error("API response is unsuccessful");
-      }
-      const jsonData = await responseData.json();
-      if (jsonData.error) {
-        throw new Error(jsonData.error.info);
-      }
-      const convertResult = (await jsonData.rates[convertFrom]) * amount;
-      const replaceDotToComma = new Intl.NumberFormat("en-US", {
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=${currency}&amount=${amount}`
+      );
+      const result = response.data[crypto][currency] * amount;
+      const NumberFormatDE = new Intl.NumberFormat("de-DE", {
+        style: "currency",
+        currency: "EUR",
+      }).format(result);
+      const NumberFormatUS = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(convertResult);
-      setResult(replaceDotToComma);
+      }).format(result);
+      setResult(
+        currency === "eur"
+          ? `${amount} ${crypto.toUpperCase()} = ${NumberFormatDE}`
+          : `${amount} ${crypto.toUpperCase()} = ${NumberFormatUS}`
+      );
     } catch (error) {
       setResult(`Error: ${error.message}`);
     }
   };
 
-  const pluralOrSingular = (amount) => {
-    const result =
-      convertFrom !== "" &&
-      amount !== "" &&
-      (amount !== "1"
-        ? `${amount} ${convertFrom}'s`
-        : `${amount} ${convertFrom}`);
-    return result;
+  const STYLES = {
+    showResult: {
+      fontSize: "1.25rem",
+      textAlign: "center",
+      backgroundColor: "#fff",
+      padding: "1rem 2rem",
+      boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+    },
+    inputField: {
+      display: "block",
+      width: "100%",
+      textAlign: "center",
+      padding: "1rem",
+      borderRadius: "0.25rem",
+      border: "1px solid #ccc",
+      fontSize: "1.25rem",
+      color: "#555",
+    },
   };
 
   return (
     <div className='App'>
-      <h1 className='header'>Crypto Converter</h1>
-      <div className='container'>
-        <h2 className='result'>{result !== "0" && pluralOrSingular(amount)}</h2>
-        <h2 className='result usd'>
-          {result !== "0" && swapDotAndComma(result)}
-        </h2>
-      </div>
-      <form className='form' action='#'>
+      <h1 className='header'>Crypto-Currencies</h1>
+      {result && (
+        <div className='container' style={STYLES.showResult}>
+          <h2 className='result'>{result}</h2>
+        </div>
+      )}
+      <form className='form'>
         <select
           required
           className='select-crypto'
           name='select-crypto'
-          onChange={handleCurrencyFrom}
+          onChange={handleCryptoSelect}
+          style={STYLES.inputField}
         >
-          <option value=''>Choose a crypto</option>
-          <option value='btc'>BTC - Bitcoin </option>
-          <option value='eth'>ETH - Ethereum </option>
-          <option value='ada'>ADA - Cardano </option>
-          <option value='xrp'>XRP - Ripple </option>
-          <option value='ltc'>LTC - Litecoin </option>
+          <option value=''>Choose a cryptocurrency</option>
+          <option value='bitcoin'>Bitcoin (BTC)</option>
+          <option value='ethereum'>Ethereum (ETH)</option>
+          <option value='cardano'>Cardano (ADA)</option>
+          <option value='ripple'>Ripple (XRP)</option>
+          <option value='litecoin'>Litecoin (LTC)</option>
         </select>
         <input
           min={0}
@@ -91,8 +101,23 @@ export const App = () => {
           className='form-input'
           type='number'
           placeholder='Amount'
-          onChange={handleCurrencyAmount}
+          onChange={handleAmountInput}
+          style={STYLES.inputField}
         />
+        <select
+          required
+          className='select-currency'
+          name='select-currency'
+          onChange={handleCurrencySelect}
+          style={STYLES.inputField}
+        >
+          <option className='select' value='eur'>
+            EUR
+          </option>
+          <option className='select' value='usd'>
+            USD
+          </option>
+        </select>
         <button
           className='form-submit-btn'
           type='submit'
