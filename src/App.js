@@ -60,17 +60,6 @@ export const App = () => {
       backgroundColor: "#fff",
       boxShadow: "inset 0 0 10px 5px rgba(0, 0, 0, 0.5)",
     },
-    inputField: {
-      display: "block",
-      width: "100%",
-      textAlign: "center",
-      padding: "1rem",
-      border: "none",
-      fontSize: "1.25rem",
-      fontWeight: "bold",
-      backgroundColor: "#fff",
-      boxShadow: "inset 0 0 10px 2px rgba(0, 0, 0, 0.5)",
-    },
   };
 
   return (
@@ -87,9 +76,7 @@ export const App = () => {
           className='select-crypto'
           name='select-crypto'
           onChange={handleCryptoSelect}
-          style={STYLES.inputField}
         >
-          <option value=''>Choose a cryptocurrency</option>
           <option value='bitcoin'>Bitcoin (BTC)</option>
           <option value='ethereum'>Ethereum (ETH)</option>
           <option value='cardano'>Cardano (ADA)</option>
@@ -103,14 +90,12 @@ export const App = () => {
           type='number'
           placeholder='Amount'
           onChange={handleAmountInput}
-          style={STYLES.inputField}
         />
         <select
           required
           className='select-currency'
           name='select-currency'
           onChange={handleCurrencySelect}
-          style={STYLES.inputField}
         >
           <option className='select' value='eur'>
             EUR

@@ -39,6 +39,21 @@
   justify-content: flex-end;
 }
 
+.select-crypto,
+.form-input,
+.select-currency {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  border: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #000;
+  background-color: #fff;
+  letter-spacing: 2px;
+}
+
 .form-submit-btn {
   display: block;
   width: 100%;
